@@ -1,0 +1,38 @@
+#!/bin/bash
+
+Help()
+{
+   echo "Scroll output line by line with a delay"
+   echo
+   echo "scroll [-h] [DELAY]"
+   echo "options:"
+   echo "h         Print this help message."
+   echo "DELAY     Time delay between lines printed (default: 0.6 seconds)."
+   echo
+   echo "example usage:"
+   echo "man curl | scroll 0.8"
+}
+
+function scroll
+{
+    while read -r
+    do
+        echo "$REPLY"
+        sleep ${1:-0.6}
+    done
+}
+
+while getopts ":h" option; do
+   case $option in
+      h) # display Help
+         Help
+         exit;;
+     \?) # incorrect option
+         echo "scroll: invalid option"
+         echo "Try 'scroll -h' for more information."
+         exit;;
+   esac
+
+done
+
+scroll $1
